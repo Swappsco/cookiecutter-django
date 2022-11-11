@@ -1,36 +1,37 @@
 .. cookiecutter-django documentation master file.
 
 Welcome to Cookiecutter Django's documentation!
-====================================================================
+===============================================
 
-A Cookiecutter_ template for Django.
+Powered by Cookiecutter_, Cookiecutter Django is a project template for jumpstarting production-ready Django projects. The template offers a number of generation options, we invite you to check the :ref:`dedicated page <template-options>` to learn more about each of them.
 
-.. _cookiecutter: https://github.com/audreyr/cookiecutter
+.. _cookiecutter: https://github.com/cookiecutter/cookiecutter
 
-.. note:: This is an in-progress documentation reorganization. Locations of files may change dramatically over the course of the next few days. See https://github.com/pydanny/cookiecutter-django/issues/335
-
-Contents:
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
-
 
    project-generation-options
    developing-locally
    developing-locally-docker
    settings
    linters
-   live-reloading-and-sass-compilation
+   testing
+   document
    deployment-on-pythonanywhere
    deployment-on-heroku
    deployment-with-docker
+   docker-postgres-backups
+   websocket
    faq
+   troubleshooting
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`search`
 
-.. At some point it would be good to have a module index of the high level things
-we are doing. Then we can * :ref:`modindex` back in.
+.. At some point it would be good to have a module index of the high level things we are doing. Then we can * :ref:`modindex` back in.

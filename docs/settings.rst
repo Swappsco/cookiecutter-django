@@ -1,19 +1,27 @@
+.. _settings:
+
 Settings
-==========
+========
 
 This project relies extensively on environment settings which **will not work with Apache/mod_wsgi setups**. It has been deployed successfully with both Gunicorn/Nginx and even uWSGI/Nginx.
 
-For configuration purposes, the following table maps environment variables to their Django setting:
+For configuration purposes, the following table maps environment variables to their Django setting and project settings:
 
 
 ======================================= =========================== ============================================== ======================================================================
 Environment Variable                    Django Setting              Development Default                            Production Default
 ======================================= =========================== ============================================== ======================================================================
-DJANGO_ADMIN_URL                        n/a                         r'^admin/'                                     raises error
-DJANGO_CACHES                           CACHES (default)            locmem                                         redis
-DJANGO_DATABASES                        DATABASES (default)         See code                                       See code
+DJANGO_READ_DOT_ENV_FILE                READ_DOT_ENV_FILE           False                                          False
+======================================= =========================== ============================================== ======================================================================
+
+
+======================================= =========================== ============================================== ======================================================================
+Environment Variable                    Django Setting              Development Default                            Production Default
+======================================= =========================== ============================================== ======================================================================
+DATABASE_URL                            DATABASES                   auto w/ Docker; postgres://project_slug w/o    raises error
+DJANGO_ADMIN_URL                        n/a                         'admin/'                                       raises error
 DJANGO_DEBUG                            DEBUG                       True                                           False
-DJANGO_SECRET_KEY                       SECRET_KEY                  CHANGEME!!!                                    raises error
+DJANGO_SECRET_KEY                       SECRET_KEY                  auto-generated                                 raises error
 DJANGO_SECURE_BROWSER_XSS_FILTER        SECURE_BROWSER_XSS_FILTER   n/a                                            True
 DJANGO_SECURE_SSL_REDIRECT              SECURE_SSL_REDIRECT         n/a                                            True
 DJANGO_SECURE_CONTENT_TYPE_NOSNIFF      SECURE_CONTENT_TYPE_NOSNIFF n/a                                            True
@@ -32,19 +40,37 @@ The following table lists settings and their defaults for third-party applicatio
 ======================================= =========================== ============================================== ======================================================================
 Environment Variable                    Django Setting              Development Default                            Production Default
 ======================================= =========================== ============================================== ======================================================================
+CELERY_BROKER_URL                       CELERY_BROKER_URL           auto w/ Docker; raises error w/o               raises error
 DJANGO_AWS_ACCESS_KEY_ID                AWS_ACCESS_KEY_ID           n/a                                            raises error
 DJANGO_AWS_SECRET_ACCESS_KEY            AWS_SECRET_ACCESS_KEY       n/a                                            raises error
 DJANGO_AWS_STORAGE_BUCKET_NAME          AWS_STORAGE_BUCKET_NAME     n/a                                            raises error
-DJANGO_SENTRY_DSN                       SENTRY_DSN                  n/a                                            raises error
-DJANGO_SENTRY_CLIENT                    SENTRY_CLIENT               n/a                                            raven.contrib.django.raven_compat.DjangoClient
+DJANGO_AWS_S3_REGION_NAME               AWS_S3_REGION_NAME          n/a                                            None
+DJANGO_AWS_S3_CUSTOM_DOMAIN             AWS_S3_CUSTOM_DOMAIN        n/a                                            None
+DJANGO_AWS_S3_MAX_MEMORY_SIZE           AWS_S3_MAX_MEMORY_SIZE      n/a                                            100_000_000
+DJANGO_GCP_STORAGE_BUCKET_NAME          GS_BUCKET_NAME              n/a                                            raises error
+GOOGLE_APPLICATION_CREDENTIALS          n/a                         n/a                                            raises error
+SENTRY_DSN                              SENTRY_DSN                  n/a                                            raises error
+SENTRY_ENVIRONMENT                      n/a                         n/a                                            production
+SENTRY_TRACES_SAMPLE_RATE               n/a                         n/a                                            0.0
 DJANGO_SENTRY_LOG_LEVEL                 SENTRY_LOG_LEVEL            n/a                                            logging.INFO
-DJANGO_MAILGUN_API_KEY                  MAILGUN_ACCESS_KEY          n/a                                            raises error
-DJANGO_MAILGUN_SERVER_NAME              MAILGUN_SERVER_NAME         n/a                                            raises error
-NEW_RELIC_APP_NAME                      NEW_RELIC_APP_NAME          n/a                                            raises error
-NEW_RELIC_LICENSE_KEY                   NEW_RELIC_LICENSE_KEY       n/a                                            raises error
-DJANGO_OPBEAT_APP_ID                    OPBEAT['APP_ID']            n/a                                            raises error
-DJANGO_OPBEAT_SECRET_TOKEN              OPBEAT['SECRET_TOKEN']      n/a                                            raises error
-DJANGO_OPBEAT_ORGANIZATION_ID           OPBEAT['ORGANIZATION_ID']   n/a                                            raises error
+MAILGUN_API_KEY                         MAILGUN_API_KEY             n/a                                            raises error
+MAILGUN_DOMAIN                          MAILGUN_SENDER_DOMAIN       n/a                                            raises error
+MAILGUN_API_URL                         n/a                         n/a                                            "https://api.mailgun.net/v3"
+MAILJET_API_KEY                         MAILJET_API_KEY             n/a                                            raises error
+MAILJET_SECRET_KEY                      MAILJET_SECRET_KEY          n/a                                            raises error
+MAILJET_API_URL                         n/a                         n/a                                            "https://api.mailjet.com/v3"
+MANDRILL_API_KEY                        MANDRILL_API_KEY            n/a                                            raises error
+MANDRILL_API_URL                        n/a                         n/a                                            "https://mandrillapp.com/api/1.0"
+POSTMARK_SERVER_TOKEN                   POSTMARK_SERVER_TOKEN       n/a                                            raises error
+POSTMARK_API_URL                        n/a                         n/a                                            "https://api.postmarkapp.com/"
+SENDGRID_API_KEY                        SENDGRID_API_KEY            n/a                                            raises error
+SENDGRID_GENERATE_MESSAGE_ID            True                        n/a                                            raises error
+SENDGRID_MERGE_FIELD_FORMAT             None                        n/a                                            raises error
+SENDGRID_API_URL                        n/a                         n/a                                            "https://api.sendgrid.com/v3/"
+SENDINBLUE_API_KEY                      SENDINBLUE_API_KEY          n/a                                            raises error
+SENDINBLUE_API_URL                      n/a                         n/a                                            "https://api.sendinblue.com/v3/"
+SPARKPOST_API_KEY                       SPARKPOST_API_KEY           n/a                                            raises error
+SPARKPOST_API_URL                       n/a                         n/a                                            "https://api.sparkpost.com/api/v1"
 ======================================= =========================== ============================================== ======================================================================
 
 --------------------------

@@ -1,45 +1,42 @@
-# Pro-tip: Try not to put anything here. Avoid dependencies in
-#	production that aren't in development.
+# PRECAUTION: avoid production dependencies that aren't in development
+
 -r base.txt
 
-{% if cookiecutter.windows == 'y' -%}
-# Python-PostgreSQL Database Adapter
-# If using Win for dev, this assumes Unix in prod
-# ------------------------------------------------
-psycopg2==2.6.1
+gunicorn==20.1.0  # https://github.com/benoitc/gunicorn
+psycopg2==2.9.5  # https://github.com/psycopg/psycopg2
+{%- if cookiecutter.use_whitenoise == 'n' %}
+Collectfast==2.2.0  # https://github.com/antonagestam/collectfast
+{%- endif %}
+{%- if cookiecutter.use_sentry == "y" %}
+sentry-sdk==1.10.1  # https://github.com/getsentry/sentry-python
+{%- endif %}
+{%- if cookiecutter.use_docker == "n" and cookiecutter.windows == "y" %}
+hiredis==2.0.0  # https://github.com/redis/hiredis-py
 {%- endif %}
 
-# WSGI Handler
-# ------------------------------------------------
-gevent==1.1.1
-gunicorn==19.5.0
-
-# Static and Media Storage
-# ------------------------------------------------
-boto==2.40.0
-django-storages-redux==1.3.2
-{% if cookiecutter.use_whitenoise != 'y' -%}
-Collectfast==0.2.3
+# Django
+# ------------------------------------------------------------------------------
+{%- if cookiecutter.cloud_provider == 'AWS' %}
+django-storages[boto3]==1.13.1  # https://github.com/jschneier/django-storages
+{%- elif cookiecutter.cloud_provider == 'GCP' %}
+django-storages[google]==1.13.1  # https://github.com/jschneier/django-storages
 {%- endif %}
-
-# Email backends for Mailgun, Postmark, SendGrid and more
-# -------------------------------------------------------
-django-anymail==0.3.1
-
-{% if cookiecutter.use_sentry == "y" -%}
-# Raven is the Sentry client
-# --------------------------
-raven
-{%- endif %}
-
-{% if cookiecutter.use_newrelic == "y" -%}
-# Newrelic agent for performance monitoring
-# -----------------------------------------
-newrelic
-{%- endif %}
-
-{% if cookiecutter.use_opbeat == "y" -%}
-# Opbeat agent for performance monitoring
-# -----------------------------------------
-opbeat
+{%- if cookiecutter.mail_service == 'Mailgun' %}
+django-anymail[mailgun]==8.6  # https://github.com/anymail/django-anymail
+{%- elif cookiecutter.mail_service == 'Amazon SES' %}
+django-anymail[amazon_ses]==8.6  # https://github.com/anymail/django-anymail
+{%- elif cookiecutter.mail_service == 'Mailjet' %}
+django-anymail[mailjet]==8.6  # https://github.com/anymail/django-anymail
+{%- elif cookiecutter.mail_service == 'Mandrill' %}
+django-anymail[mandrill]==8.6  # https://github.com/anymail/django-anymail
+{%- elif cookiecutter.mail_service == 'Postmark' %}
+django-anymail[postmark]==8.6  # https://github.com/anymail/django-anymail
+{%- elif cookiecutter.mail_service == 'Sendgrid' %}
+django-anymail[sendgrid]==8.6  # https://github.com/anymail/django-anymail
+{%- elif cookiecutter.mail_service == 'SendinBlue' %}
+django-anymail[sendinblue]==8.6  # https://github.com/anymail/django-anymail
+{%- elif cookiecutter.mail_service == 'SparkPost' %}
+django-anymail[sparkpost]==8.6  # https://github.com/anymail/django-anymail
+{%- elif cookiecutter.mail_service == 'Other SMTP' %}
+django-anymail==8.6  # https://github.com/anymail/django-anymail
 {%- endif %}
